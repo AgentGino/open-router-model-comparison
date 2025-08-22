@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenRouter AI Model Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">AI Model Comparison</h1>
+            <p class="text-gray-600">Compare responses from multiple OpenRouter AI models</p>
+        </div>
+
+        <!-- API Key Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">API Configuration</h2>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <input 
+                    type="password" 
+                    id="apiKey" 
+                    placeholder="Enter your OpenRouter API Key" 
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                <button 
+                    id="loadModels" 
+                    class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    Load Models
+                </button>
+            </div>
+        </div>
+
+        <!-- Model Selection Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Select Models</h2>
+            <div class="mb-4">
+                <!-- Custom Multi-Select Dropdown -->
+                <div class="relative">
+                    <div class="model-dropdown-container">
+                        <div class="model-dropdown-header" id="modelDropdownHeader">
+                            <input 
+                                type="text" 
+                                id="modelSearchInput" 
+                                placeholder="Search and select models..." 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                autocomplete="off"
+                            >
+                            <div class="dropdown-arrow">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Selected Models Display -->
+                        <div id="selectedModelsDisplay" class="selected-models-display hidden">
+                            <!-- Selected model chips will appear here -->
+                        </div>
+                        
+                        <!-- Dropdown Options -->
+                        <div id="modelDropdownOptions" class="model-dropdown-options hidden">
+                            <div class="dropdown-controls">
+                                <button id="selectAllDropdown" class="control-btn">
+                                    Select All
+                                </button>
+                                <button id="clearAllDropdown" class="control-btn">
+                                    Clear All
+                                </button>
+                            </div>
+                            <div id="modelOptionsContainer" class="model-options-container">
+                                <!-- Model options will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="selectedModelsCount" class="text-sm text-gray-600 mt-4">
+                No models selected
+            </div>
+        </div>
+
+        <!-- Prompt Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Enter Your Prompt</h2>
+            <textarea 
+                id="promptInput" 
+                rows="4" 
+                placeholder="Type your prompt here..." 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            ></textarea>
+            <div class="flex justify-between items-center mt-4">
+                <div class="flex gap-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="streaming" class="mr-2">
+                        <span class="text-sm text-gray-600">Enable Streaming</span>
+                    </label>
+                </div>
+                <button 
+                    id="sendPrompt" 
+                    class="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+                    disabled
+                >
+                    Send Prompt
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="hidden bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="flex items-center justify-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-3"></div>
+                <span class="text-gray-700">Processing requests...</span>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="hidden">
+            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Model Responses</h2>
+            <div id="responseGrid" class="grid gap-6">
+                <!-- Responses will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Error Messages -->
+        <div id="errorMessage" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <!-- Error messages will appear here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
